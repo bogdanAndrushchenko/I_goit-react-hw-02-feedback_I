@@ -1,0 +1,10 @@
+.Statistic__item {
+  color: #a9a7a7;
+  font-weight: 500;
+  font-size: 22px;
+  line-height: 2.3vh;
+}
+
+.Item__value {
+  color: white;
+}

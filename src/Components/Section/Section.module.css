@@ -1,0 +1,10 @@
+.Section {
+  padding: 15px;
+  width: 100%;
+  background-color: teal;
+}
+
+.Section__title {
+  color: white;
+  margin-top: 5px;
+}
