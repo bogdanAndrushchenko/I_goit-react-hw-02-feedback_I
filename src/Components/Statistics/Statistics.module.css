@@ -1,8 +1,8 @@
 .Statistic__item {
+  list-style-type: none;
   color: #a9a7a7;
   font-weight: 500;
   font-size: 22px;
-  line-height: 2.3vh;
 }
 
 .Item__value {
