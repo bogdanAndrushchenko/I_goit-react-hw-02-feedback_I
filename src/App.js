@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { useState } from 'react';
 
 import './App.css';
 
@@ -8,54 +8,56 @@ import Section from './Components/Section';
 
 import { FEEDBACK_OPTIONS } from './data/constans';
 
-class App extends Component {
-  state = {
-    good: 0,
-    neutral: 0,
-    bad: 0,
-  };
+const App = () => {
+  const [good, setGood] = useState(0);
+  const [neutral, setNeutral] = useState(0);
+  const [bad, setBad] = useState(0);
 
-  addHandlerFeedback = ({ target }) => {
+  const addHandlerFeedback = ({ target }) => {
+    //от event, потому-что на onClick
     const { feedback } = target.dataset;
-    this.setState(prevState => ({ [feedback]: prevState[feedback] + 1 }));
+    if (feedback === 'good') {
+      setGood(prevState => prevState + 1);
+    }
+    if (feedback === 'bad') {
+      setBad(prevState => prevState + 1);
+    }
+    if (feedback === 'neutral') {
+      setNeutral(prevState => prevState + 1);
+    }
   };
 
-  countTotalFeedback = () => {
-    const { good, neutral, bad } = this.state;
+  const countTotalFeedback = () => {
     return good + neutral + bad;
   };
 
-  countPositiveFeedbackPercentage = () => {
-    const total = this.countTotalFeedback();
-    const { good } = this.state;
+  const countPositiveFeedbackPercentage = () => {
     return ((good / total) * 100).toFixed();
   };
 
-  render() {
-    const { good, neutral, bad } = this.state;
-    const total = this.countTotalFeedback();
-    const positiveFeedback = this.countPositiveFeedbackPercentage();
-    return (
-      <div className="Feedback">
-        <Section title="Please leave feedback">
-          <FeedbackOptions
-            options={FEEDBACK_OPTIONS}
-            onLeaveFeedback={this.addHandlerFeedback}
-          />
-        </Section>
+  const total = countTotalFeedback();
+  const positiveFeedback = countPositiveFeedbackPercentage();
 
-        <Section title="Statistics">
-          <Statistics
-            good={good}
-            neutral={neutral}
-            bad={bad}
-            total={total}
-            positiveFeedback={positiveFeedback}
-          />
-        </Section>
-      </div>
-    );
-  }
-}
+  return (
+    <div className="Feedback">
+      <Section title="Please leave feedback">
+        <FeedbackOptions
+          options={FEEDBACK_OPTIONS}
+          onLeaveFeedback={addHandlerFeedback}
+        />
+      </Section>
+
+      <Section title="Statistics">
+        <Statistics
+          good={good}
+          neutral={neutral}
+          bad={bad}
+          total={total}
+          positiveFeedback={positiveFeedback}
+        />
+      </Section>
+    </div>
+  );
+};
 
 export default App;
